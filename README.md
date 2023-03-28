@@ -5,3 +5,4 @@ Requirements:
 
 - python vtk (conda install vtk is normally ok)
 - Paraview (tar.gz version without installation required from [https://www.paraview.org/download/](# https://www.paraview.org/download/) is ok for Linux )
+- scipy (version >=1.8.0, sparse dia_matrix-> dia_array)
