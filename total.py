@@ -88,14 +88,17 @@ tau = 0.01
 
 # Создаём сетку заданного размера
 m = CalcMesh(size, h)
-# Пишем её начальное состояние в VTK
-m.snapshot(0)
 
 # create dir for specific cartoon, move to it, leave it at the end
 
 dirname = 'cartoon' + '-'.join(asctime()[3:-5].split())
 mkdir(dirname)
 chdir(dirname)
+
+# Пишем её начальное состояние в VTK
+m.snapshot(0)
+
+
 
 # Делаем шаги по времени,
 # на каждом шаге считаем новое состояние и пишем его в VTK
