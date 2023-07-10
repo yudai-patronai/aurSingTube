@@ -33,17 +33,16 @@ class CalcMesh:
       
 
         # Модельная скалярная величина распределена как-то вот так
-        self.smth = np.zeros((self.hsize, self.vsize))
+        self.smth = np.zeros((self.hsize*self.vsize,1))
+        self.smth[0] = 1
         
         
-        self.velocity = np.power(self.nodes[0] - self.nodes[1], 2) # (x-y)^2
-        
-        
+ 
     # Метод отвечает за выполнение для всей сетки шага по времени величиной tau
-    def move(self, tau):
+    def move(self, num):
         # По сути метод просто двигает все точки c их текущими скоростями
-        self.smth += self.velocity[:,:] * tau
-
+        self.smth[num%(self.smth.size)] = 1
+        self.smth[(num-1)%(self.smth.size)] = 0
     
     def snapshot(self, snap_number):
        
@@ -87,8 +86,8 @@ class CalcMesh:
 
 if __name__=="__main__":
     # Размер расчётной сетки, точек на сторону
-    vsize = 120
-    hsize = 50
+    vsize = 5
+    hsize = 6
     # Шаг точек по пространству
     h = 0.1
     # Шаг по времени
@@ -111,9 +110,9 @@ if __name__=="__main__":
 
     # Делаем шаги по времени,
     # на каждом шаге считаем новое состояние и пишем его в VTK
-    #for i in range(1, 100):
-    #    m.move(tau)
-    #    m.snapshot(i)
+    for i in range(1, 50):
+        m.move(i)
+        m.snapshot(i)
 
     chdir("..")
     #---------------------------------------------------------------
