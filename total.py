@@ -36,8 +36,6 @@ class CalcMesh:
         self.smth = np.zeros((self.hsize, self.vsize))
         
         
-        # Профиль скорости взят какой-нибудь с потолка, есть только компонента по Z
-        #self.velocity = np.zeros(shape=(3, size, size), dtype=np.double)
         self.velocity = np.power(self.nodes[0] - self.nodes[1], 2) # (x-y)^2
         
         
@@ -46,46 +44,18 @@ class CalcMesh:
         # По сути метод просто двигает все точки c их текущими скоростями
         self.smth += self.velocity[:,:] * tau
 
-    # Метод отвечает за запись текущего состояния сетки в снапшот в формате VTK
+    
     def snapshot(self, snap_number):
-        # Сетка в терминах VTK
-
-        # Скалярное поле на точках сетки
+       
         smth = vtk.vtkDoubleArray()
         smth.SetName("smth")
 
-        # Векторное поле на точках сетки
-        """
-        vel = vtk.vtkDoubleArray()
-        vel.SetNumberOfComponents(4)
-        vel.SetName("vel")
-        """
         
-        # Обходим все точки нашей расчётной сетки
-        # Делаем это максимально неэффективным, зато наглядным образом
-        # nodes - point coords, 3-by-height-by-width, vtkPoints
-        # smth - scalar values, 1-by-height-by-width, vtkDoubleArray
-        # vel - vector values, 3-by-height-by-width, vtkDoubleArray
-        
-        # the following is all about attaching data to points    
-        
-        #for i in range(0, number):
-        #for j in range(0, self.nodes.shape[0]):
-                # Вставляем новую точку в сетку VTK-снапшота
-
-         #       points.InsertNextPoint(self.nodes[i,0],self.nodes[i,1],self.nodes[i,2])
-                # Добавляем значение скалярного поля в этой точке
-                #smth.InsertNextValue(self.smth[i,j])
-                # Добавляем значение векторного поля в этой точке
-                #vel.InsertNextTuple((self.velocity[0][i,j], self.velocity[1][i,j], self.velocity[2][i,j], self.velocity[3][i,j]))
-        vtkarr = vtk.vtkDoubleArray()
-        vtkarr.SetNumberOfComponents(self.nodes.shape[1])
-        vtkarr.SetNumberOfTuples(self.nodes.shape[0])
-        vtkarr.SetVoidArray(self.nodes.copy(order='C'), self.nodes.size, 1)
-        print(vtkarr)
         
         points = vtk.vtkPoints()
-        points.SetData(vtkarr)
+        #points.SetData(vtkarr)
+        for x in self.nodes:
+            points.InsertNextPoint(x)
         print(points)
         
         print(self.smth.shape)
