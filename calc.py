@@ -29,11 +29,13 @@ def createA(h, tau, m, n):
     N=m*n
     ex = np.ones(N)
     offsets = np.array([-n, -1,0,1,n])
-    ipos = np.repeat(np.array([0] + [(i + 0.5)/(2*h*h*(i)*(i)) for i in range(1,n-1)] + [0]),m)
+    diag = ex*(1/tau + 2/(h*h))
+    right = -np.array([(i%n + 0.5)/(2*h*h*(i%n)*(i%n)) for i in range(N)])
 
-    ineg = np.repeat(np.array([0] + [(i + 0.5)/(2*h*h*(i)*(i)) for i in range(1,n-1)] + [0]),m)
-
-    data = np.array([-ex*1/(2*h*h), -ineg, ex*(1/tau + 2/(h*h)), -ipos, -ex*1/(2*h*h) ],dtype='float64')
+    left = -np.array([(i%n - 0.5)/(2*h*h*(i%n)*(i%n)) for i in range(N)])
+    lower = -ex*1/(2*h*h)
+    upper = -ex*1/(2*h*h)
+    data = np.array([lower, left, diag, right, upper ],dtype='float64')
 
     return ssp.dia_array((data, offsets), shape=(N, N))
    
