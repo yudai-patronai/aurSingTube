@@ -23,6 +23,9 @@ import numpy as np
 import scipy.sparse as ssp
 
 def createA(h, tau, m, n):
+    """
+    returns left-side matrix A in Ax_new = Bx_old + ... in dia_array form
+    """
     N=m*n
     ex = np.ones(N)
     offsets = np.array([-n, -1,0,1,n])
