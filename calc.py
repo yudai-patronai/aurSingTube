@@ -30,11 +30,16 @@ def createA(h, tau, m, n):
     ex = np.ones(N)
     offsets = np.array([-n, -1,0,1,n])
     diag = ex*(1/tau + 2/(h*h))
+    # 1st is lost:
     right = -np.array([(i%n + 0.5)/(2*h*h*(i%n)*(i%n)) for i in range(N)])
-
+    # last is lost:
     left = -np.array([(i%n - 0.5)/(2*h*h*(i%n)*(i%n)) for i in range(N)])
     lower = -ex*1/(2*h*h)
+    # bottom boarder:
+    lower[N-n:] += -np.ones(n)*1/(2*h*h)
     upper = -ex*1/(2*h*h)
+    # top boarder:
+    upper[n:2n] += -np.ones(n)*1/(2*h*h)
     data = np.array([lower, left, diag, right, upper ],dtype='float64')
 
     return ssp.dia_array((data, offsets), shape=(N, N))
