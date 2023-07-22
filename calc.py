@@ -30,9 +30,20 @@ def createA(h, tau, m, n):
     left[0] diag[1]  right[2] 0   ... 0     upper[n+1] ...
     0       left[1]  diag[2]  right[3]   .....
     ......................................
-    ..........  lower[N-2n-2] 0     ....    left[N-3] diag[N-2] right[N-1]
-    .............0           lower[N-2n-1] ...0       left[N-2] diag[N-1]   
+    ..........  lower[N-n-2] 0     ....    left[N-3] diag[N-2] right[N-1]
+    .............0           lower[N-n-1] ...0       left[N-2] diag[N-1]   
     ======================================================================
+    Parameters
+    ----------
+    h : float
+        space step.
+    tau : float
+        time step.
+    m : int
+        grid x size.
+    n : int
+        grid y size.
+
     """
     N=m*n
     ex = np.ones(N)
@@ -65,10 +76,10 @@ def createA(h, tau, m, n):
     # first n are lost
     data = np.array([lower, left, diag, right, upper ],dtype='float64')
 
-    return ssp.dia_array((data, offsets), shape=(N, N))
+    return ssp.dia_array((data, offsets), shape=(N, N)).asformat('csr')
    
 
-def create_b(h, tau, m, n):
+def createB(h, tau, m, n):
     """
     returns right-side matrix B in Ax_new = Bx_old + ... in dia_array form
     ======================================================================
@@ -76,9 +87,20 @@ def create_b(h, tau, m, n):
     left[0] diag[1]  right[2] 0   ... 0     upper[n+1] ...
     0       left[1]  diag[2]  right[3]   .....
     ......................................
-    ..........  lower[N-2n-2] 0     ....    left[N-3] diag[N-2] right[N-1]
-    .............0           lower[N-2n-1] ...0       left[N-2] diag[N-1]   
+    ..........  lower[N-n-2] 0     ....    left[N-3] diag[N-2] right[N-1]
+    .............0           lower[N-n-1] ...0       left[N-2] diag[N-1]   
     ======================================================================
+    Parameters
+    ----------
+    h : float
+        space step.
+    tau : float
+        time step.
+    m : int
+        grid x size.
+    n : int
+        grid y size.
+
     """
     N=m*n
     ex = np.ones(N)
@@ -108,7 +130,28 @@ def create_b(h, tau, m, n):
     upper[n:2*n] *= 2
     # first n are lost
     data = np.array([lower, left, diag, right, upper ],dtype='float64')
-    return np.ones(h*tau)
+    return ssp.dia_array((data, offsets), shape=(N, N)).asformat('csr')
 
-def step(h, tau):
-    return ssp.linalg.spsolve(createA(h, tau), create_b(h, tau))
+def step(xold ,h, tau, m,n):
+    """
+    gives x_new known x_old with Ax_new = Bx_old + ... 
+    
+
+    Parameters
+    ----------
+    h : float
+        space step.
+    tau : float
+        time step.
+    m : int
+        grid x size.
+    n : int
+        grid y size.
+
+    Returns
+    -------
+    ndarray
+        new step values.
+
+    """
+    return ssp.linalg.spsolve(createA(h, tau,m, n), createB(h, tau,m ,n)@xold)
