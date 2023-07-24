@@ -2,7 +2,7 @@ import numpy as np
 import vtk
 from os import mkdir, chdir
 from time import asctime
-
+import calc as cc 
 
 # Класс расчётной сетки
 class CalcMesh:
@@ -12,6 +12,7 @@ class CalcMesh:
         # 2D-сетка из расчётных точек, у каждой из которых, тем не менее, 3 координаты
         self.hsize = hsize
         self.vsize = vsize
+        self.step = step
         xys = np.array(np.meshgrid(np.arange(hsize),np.arange(vsize)), dtype='float64')
         
         
@@ -39,10 +40,12 @@ class CalcMesh:
         
  
     # Метод отвечает за выполнение для всей сетки шага по времени величиной tau
-    def move(self, num):
+    def move(self, num, tau):
         # По сути метод просто двигает все точки c их текущими скоростями
-        self.smth[num%(self.smth.size)] = 1
-        self.smth[(num-1)%(self.smth.size)] = 0
+        
+        calc = cc.Diff(self.step, tau, self.vsize, self.hsize)
+        
+        self.smth = calc.step(self.smth)
     
     def snapshot(self, snap_number):
        
