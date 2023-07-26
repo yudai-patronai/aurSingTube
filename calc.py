@@ -29,6 +29,8 @@ class Diff():
         self.n = n
         self.h = h 
         self.tau = tau
+        self.A = self.createA()
+        self.B = self.createB()
 
     def createA(self):
         """
@@ -162,4 +164,4 @@ class Diff():
             new step values.
     
         """
-        return ssp.linalg.spsolve(self.createA(), self.createB()@xold)
+        return ssp.linalg.spsolve(self.A, self.B@xold)

@@ -62,7 +62,7 @@ class CalcMesh:
         
         print(self.smth.shape)
         print(self.smth)
-        values = np.reshape(self.smth,(self.smth.shape[0]*self.smth.shape[1], 1))
+        values = np.reshape(self.smth,(self.smth.shape[0], 1))
         smth.SetNumberOfComponents(values.shape[1])
         smth.SetNumberOfTuples(values.shape[0])
         smth.SetVoidArray(values, values.size, 1)
@@ -94,7 +94,7 @@ if __name__=="__main__":
     # Шаг точек по пространству
     h = 0.1
     # Шаг по времени
-    tau = 0.01
+    tau = 0.0001
 
     # Создаём сетку заданного размера
     m = CalcMesh(vsize, hsize, h)
@@ -113,8 +113,8 @@ if __name__=="__main__":
 
     # Делаем шаги по времени,
     # на каждом шаге считаем новое состояние и пишем его в VTK
-    for i in range(1, 50):
-        m.move(i)
+    for i in range(1, 5):
+        m.move(i, tau)
         m.snapshot(i)
 
     chdir("..")
