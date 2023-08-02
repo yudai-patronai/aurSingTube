@@ -34,8 +34,8 @@ class CalcMesh:
       
 
         # Модельная скалярная величина распределена как-то вот так
-        self.smth = np.zeros((self.hsize*self.vsize,1))
-        self.smth[0] = 1
+        self.smth = np.ones((self.hsize*self.vsize,1))
+        #self.smth[0] = 1
         
         
  
@@ -44,6 +44,8 @@ class CalcMesh:
         # По сути метод просто двигает все точки c их текущими скоростями
         
         calc = cc.Diff(self.step, tau, self.vsize, self.hsize)
+        #print('left=', calc.A.nonzero())
+        #print('right=', calc.B.nonzero())
         
         self.smth = calc.step(self.smth)
     
@@ -58,10 +60,10 @@ class CalcMesh:
         #points.SetData(vtkarr)
         for x in self.nodes:
             points.InsertNextPoint(x)
-        print(points)
+        #print(points)
         
-        print(self.smth.shape)
-        print(self.smth)
+        #print(self.smth.shape)
+        #print(self.smth)
         values = np.reshape(self.smth,(self.smth.shape[0], 1))
         smth.SetNumberOfComponents(values.shape[1])
         smth.SetNumberOfTuples(values.shape[0])
@@ -72,7 +74,7 @@ class CalcMesh:
         structuredGrid.SetPoints(points)
         
         
-        print(structuredGrid)
+        #print(structuredGrid)
         
         # Присоединяем векторное и скалярное поля к точкам
         structuredGrid.GetPointData().AddArray(smth)
@@ -89,12 +91,12 @@ class CalcMesh:
 
 if __name__=="__main__":
     # Размер расчётной сетки, точек на сторону
-    vsize = 5
-    hsize = 6
+    vsize = 15
+    hsize = 10
     # Шаг точек по пространству
     h = 0.1
     # Шаг по времени
-    tau = 0.0001
+    tau = 0.01
 
     # Создаём сетку заданного размера
     m = CalcMesh(vsize, hsize, h)

@@ -30,7 +30,9 @@ class Diff():
         self.h = h 
         self.tau = tau
         self.A = self.createA()
+        print(self.A)
         self.B = self.createB()
+        print(self.B)
 
     def createA(self):
         """
@@ -60,15 +62,15 @@ class Diff():
         offsets = np.array([-self.n, -1,0,1,self.n])
         diag = ex*(1/self.tau + 2/hh)
         # 1st is lost:
-        right = -np.array([0] + [(i%self.n + 0.5)/(2*hh*(i%self.n)*(i%self.n)) if i%self.n else 0 for i in range(self.N-1)])
+        right = -np.array([0] + [(1 + 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(self.N-1)])
        
         # last is lost:
-        left = -np.array([(i%self.n - 0.5)/(2*hh*(i%self.n)*(i%self.n)) if i%self.n else 0 for i in range(1,self.N)] + [0])
+        left = -np.array([(1 - 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(1,self.N)] + [0])
         # leftmost boarder:
         lmost = np.arange(self.m)*self.n
-        print(lmost)
+        #print(lmost)
         diag[lmost] = 1/self.tau + 3/(hh)
-        print(diag)
+        #print(diag)
         left[lmost[1:]-1] = 0
         right[lmost+1] = -2/(hh)
          # rightmost boarder:
@@ -117,10 +119,10 @@ class Diff():
         offsets = np.array([-self.n, -1,0,1,self.n])
         diag = ex*(1/self.tau - 2/(hh))
         # 1st is lost:
-        right = np.array([0] + [(i%self.n + 0.5)/(2*hh*(i%self.n)*(i%self.n)) if i%self.n else 0 for i in range(self.N-1)])
+        right = np.array([0] + [(1 + 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(self.N-1)])
        
         # last is lost:
-        left = np.array([(i%self.n - 0.5)/(2*hh*(i%self.n)*(i%self.n)) if i%self.n else 0 for i in range(1,self.N)] + [0])
+        left = np.array([(1 - 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(1,self.N)] + [0])
         # leftmost boarder:
         lmost = np.arange(self.m)*self.n
         diag[lmost] = 1/self.tau - 3/(hh)
