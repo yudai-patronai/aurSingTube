@@ -34,7 +34,7 @@ class CalcMesh:
       
 
         # Модельная скалярная величина распределена как-то вот так
-        self.smth = np.ones((self.hsize*self.vsize,1))
+        self.smth = np.ones((self.hsize*self.vsize, 1))
         #self.smth[0] = 1
         
         
@@ -91,8 +91,8 @@ class CalcMesh:
 
 if __name__=="__main__":
     # Размер расчётной сетки, точек на сторону
-    vsize = 15
-    hsize = 10
+    vsize = 40
+    hsize = 60
     # Шаг точек по пространству
     h = 0.1
     # Шаг по времени
@@ -115,7 +115,7 @@ if __name__=="__main__":
 
     # Делаем шаги по времени,
     # на каждом шаге считаем новое состояние и пишем его в VTK
-    for i in range(1, 5):
+    for i in range(1, 10):
         m.move(i, tau)
         m.snapshot(i)
 

@@ -29,10 +29,11 @@ class Diff():
         self.n = n
         self.h = h 
         self.tau = tau
+        self.crnt = tau/(h*h)   # Courant value
         self.A = self.createA()
-        print(self.A)
+        print('A=', self.A)
         self.B = self.createB()
-        print(self.B)
+        print('B=', self.B)
 
     def createA(self):
         """
@@ -57,34 +58,34 @@ class Diff():
             grid y size.
     
         """
-        hh = self.h*self.h
+        #hh = self.h*self.h
         ex = np.ones(self.N)
         offsets = np.array([-self.n, -1,0,1,self.n])
-        diag = ex*(1/self.tau + 2/hh)
+        diag = ex + 2*self.crnt
         # 1st is lost:
-        right = -np.array([0] + [(1 + 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(self.N-1)])
+        right = -0.5*self.crnt*np.array([0] + [(1 + 0.5/(i%self.n)) if i%self.n else 0 for i in range(self.N-1)])
        
         # last is lost:
-        left = -np.array([(1 - 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(1,self.N)] + [0])
+        left = -0.5*self.crnt*np.array([(1 - 0.5/(i%self.n)) if i%self.n else 0 for i in range(1,self.N)] + [0])
         # leftmost boarder:
         lmost = np.arange(self.m)*self.n
         #print(lmost)
-        diag[lmost] = 1/self.tau + 3/(hh)
+        diag[lmost] = 1 + 3*self.crnt
         #print(diag)
         left[lmost[1:]-1] = 0
-        right[lmost+1] = -2/(hh)
+        right[lmost+1] = -2*self.crnt
          # rightmost boarder:
         rmost = lmost + self.n - 1 
         left[rmost-1] *= 2
         right[rmost[:-1]+1] = 0
         # first n are lost
-        lower = -ex*1/(2*hh)
+        lower = -ex*0.5*self.crnt
         # bottom boarder:
-        lower[self.N-2*self.n:self.N-self.n] *= 2 
+        lower[self.N-2*self.n : self.N-self.n] *= 2 
         #last n are lost
-        upper = -ex*1/(2*hh)
+        upper = -ex*0.5*self.crnt
         # top boarder:
-        upper[self.n:2*self.n] *= 2
+        upper[self.n : 2*self.n] *= 2
         # first n are lost
         data = np.array([lower, left, diag, right, upper ],dtype='float64')
     
@@ -114,32 +115,32 @@ class Diff():
             grid y size.
     
         """
-        hh = self.h*self.h
+        #hh = self.h*self.h
         ex = np.ones(self.N)
         offsets = np.array([-self.n, -1,0,1,self.n])
-        diag = ex*(1/self.tau - 2/(hh))
+        diag = ex - 2*self.crnt
         # 1st is lost:
-        right = np.array([0] + [(1 + 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(self.N-1)])
+        right = 0.5*self.crnt*np.array([0] + [(1 + 0.5/(i%self.n)) if i%self.n else 0 for i in range(self.N-1)])
        
         # last is lost:
-        left = np.array([(1 - 0.5/(i%self.n))/(2*hh) if i%self.n else 0 for i in range(1,self.N)] + [0])
+        left = 0.5*self.crnt*np.array([(1 - 0.5/(i%self.n)) if i%self.n else 0 for i in range(1,self.N)] + [0])
         # leftmost boarder:
         lmost = np.arange(self.m)*self.n
-        diag[lmost] = 1/self.tau - 3/(hh)
+        diag[lmost] = 1 - 3*self.crnt
         left[lmost[1:]-1] = 0
-        right[lmost+1] = -2/(hh)
+        right[lmost+1] = 2*self.crnt
          # rightmost boarder:
         rmost = lmost + self.n - 1 
         left[rmost-1] *= 2
         right[rmost[:-1]+1] = 0
         # first n are lost
-        lower = ex*1/(2*hh)
+        lower = ex*0.5*self.crnt
         # bottom boarder:
-        lower[self.N-2*self.n:self.N-self.n] *= 2 
+        lower[self.N-2*self.n : self.N-self.n] *= 2 
         #last n are lost
-        upper = ex*1/(2*hh)
+        upper = ex*0.5*self.crnt
         # top boarder:
-        upper[self.n:2*self.n] *= 2
+        upper[self.n : 2*self.n] *= 2
         # first n are lost
         data = np.array([lower, left, diag, right, upper ],dtype='float64')
         return ssp.dia_array((data, offsets), shape=(self.N, self.N)).asformat('csr')
