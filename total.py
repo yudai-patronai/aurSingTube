@@ -91,12 +91,12 @@ class CalcMesh:
 
 if __name__=="__main__":
     # Размер расчётной сетки, точек на сторону
-    vsize = 15
-    hsize = 10
+    vsize = 50
+    hsize = 100
     # Шаг точек по пространству
     h = 0.1
     # Шаг по времени
-    tau = 0.01
+    tau = 0.1
 
     # Создаём сетку заданного размера
     m = CalcMesh(vsize, hsize, h)
@@ -115,7 +115,7 @@ if __name__=="__main__":
 
     # Делаем шаги по времени,
     # на каждом шаге считаем новое состояние и пишем его в VTK
-    for i in range(1, 5):
+    for i in range(1, 50):
         m.move(i, tau)
         m.snapshot(i)
 
