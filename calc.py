@@ -23,13 +23,22 @@ import numpy as np
 import scipy.sparse as ssp
 
 class Diff():
-    def __init__(self, h, tau, m,n):
+    """
+    class, encompassing all the calculating algs, 
+    init takes following args:
+        h - space step
+        tau - time step
+        m - vertical size in number of nodes
+        n - horizontal size in number of nodes
+        D - diffusion coefficient 
+    """
+    def __init__(self, h, tau, m,n, D = 1):
         self.N = m*n
         self.m = m
         self.n = n
         self.h = h 
         self.tau = tau
-        self.crnt = tau/(h*h)   # Courant value
+        self.crnt = tau/(h*h) * D  # Courant value
         self.A = self.createA()
         print('A=', self.A)
         self.B = self.createB()
@@ -76,7 +85,7 @@ class Diff():
         right[lmost+1] = -2*self.crnt
          # rightmost boarder:
         rmost = lmost + self.n - 1 
-        left[rmost-1] *= 2
+        left[rmost-1] = -self.crnt
         right[rmost[:-1]+1] = 0
         # first n are lost
         lower = -ex*0.5*self.crnt
@@ -131,7 +140,7 @@ class Diff():
         right[lmost+1] = 2*self.crnt
          # rightmost boarder:
         rmost = lmost + self.n - 1 
-        left[rmost-1] *= 2
+        left[rmost-1] = self.crnt
         right[rmost[:-1]+1] = 0
         # first n are lost
         lower = ex*0.5*self.crnt

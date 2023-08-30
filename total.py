@@ -8,11 +8,12 @@ import calc as cc
 class CalcMesh:
 
     # Конструктор сетки size x size точек с шагом h по пространству
-    def __init__(self, vsize, hsize, step):
+    def __init__(self, vsize, hsize, step, tau):
         # 2D-сетка из расчётных точек, у каждой из которых, тем не менее, 3 координаты
         self.hsize = hsize
         self.vsize = vsize
         self.step = step
+        self.tau = tau
         xys = np.array(np.meshgrid(np.arange(hsize),np.arange(vsize)), dtype='float64')
         
         
@@ -25,6 +26,8 @@ class CalcMesh:
 
       
         print('coords=\n ', self.nodes)
+        
+        self.comp = cc.Diff(self.step, self.tau, self.vsize, self.hsize)
         #-------------------------------------------------------------
         
         
@@ -43,11 +46,11 @@ class CalcMesh:
     def move(self, num, tau):
         # По сути метод просто двигает все точки c их текущими скоростями
         
-        calc = cc.Diff(self.step, tau, self.vsize, self.hsize)
+        #calc = cc.Diff(self.step, tau, self.vsize, self.hsize)
         #print('left=', calc.A.nonzero())
         #print('right=', calc.B.nonzero())
         
-        self.smth = calc.step(self.smth)
+        self.smth = self.comp.step(self.smth)
     
     def snapshot(self, snap_number):
        
@@ -99,7 +102,7 @@ if __name__=="__main__":
     tau = 0.01
 
     # Создаём сетку заданного размера
-    m = CalcMesh(vsize, hsize, h)
+    m = CalcMesh(vsize, hsize, h, tau)
 
     # create dir for specific cartoon, move to it, leave it at the end
 
