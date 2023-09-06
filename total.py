@@ -30,15 +30,14 @@ class CalcMesh:
         self.comp = cc.Diff(self.step, self.tau, self.vsize, self.hsize)
         #-------------------------------------------------------------
         
+        samp = np.linspace(0,1,self.hsize)
         
-        
-       
-
-      
-
+        #samp[1:] = np.log(samp[1:])
+        #samp[0] = samp[1] - 1/self.step 
+        #samp = -samp
         # Модельная скалярная величина распределена как-то вот так
-        self.smth = np.ones((self.hsize*self.vsize, 1))
-        #self.smth[0] = 1
+        #self.smth = np.tile(samp, self.vsize)
+        
         
         
  
@@ -94,15 +93,26 @@ class CalcMesh:
 
 if __name__=="__main__":
     # Размер расчётной сетки, точек на сторону
-    vsize = 40
-    hsize = 60
+    vsize = 10
+    hsize = 10
     # Шаг точек по пространству
     h = 0.1
     # Шаг по времени
-    tau = 0.01
+    tau = 0.001
+    
+    nsteps = 20
 
     # Создаём сетку заданного размера
     m = CalcMesh(vsize, hsize, h, tau)
+    #---------------------------------
+    
+    # setting up starting distibutions
+    num = np.random.randint(hsize * vsize)
+    startdistrib = np.zeros((hsize * vsize, 1))
+    startdistrib[num] = 1
+    
+    m.smth = startdistrib
+    #---------------------------------------------
 
     # create dir for specific cartoon, move to it, leave it at the end
 
@@ -118,7 +128,7 @@ if __name__=="__main__":
 
     # Делаем шаги по времени,
     # на каждом шаге считаем новое состояние и пишем его в VTK
-    for i in range(1, 10):
+    for i in range(1, nsteps):
         m.move(i, tau)
         m.snapshot(i)
 
