@@ -116,7 +116,7 @@ if __name__=="__main__":
 
     # create dir for specific cartoon, move to it, leave it at the end
 
-    dirname = 'cartoon' + '-'.join(asctime()[3:-5].split())
+    dirname = 'cartoon' + '-'.join(asctime()[3:-5].replace(':','=').split())
     mkdir(dirname)
     chdir(dirname)
 
