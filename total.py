@@ -3,6 +3,7 @@ import vtk
 from os import mkdir, chdir
 from time import asctime
 import calc as cc 
+from math import floor, ceil
 
 # Класс расчётной сетки
 class CalcMesh:
@@ -91,6 +92,23 @@ class CalcMesh:
         writer.SetInputDataObject(structuredGrid)
         writer.SetFileName("cubic2d-step-" + str(snap_number) + ".vts")
         writer.Write()
+# setting up starting distribution       
+def startdistrib(m, n):
+    """
+
+    Parameters
+    ----------
+    m : vertical size, int.
+    n : horizontal size, int
+
+    Returns
+    -------
+    x : numpy ndarray of size (m*n, ) , floats
+
+    """
+    samp = np.concatenate((np.zeros(floor(n * 0.75)), np.ones(ceil(n * 0.25))))
+    x = np.tile(samp, m)
+    return x
 
 if __name__=="__main__":
     # Размер расчётной сетки, точек на сторону
@@ -100,32 +118,26 @@ if __name__=="__main__":
     # Шаг точек по пространству
     h = 0.1
     # Шаг по времени
-    tau = 0.1
+    tau = 0.002
 
     
-    # Шаг точек по пространству
-    h = 0.1
-    # Шаг по времени
-    tau = 0.001
-    
+
     nsteps = 20
->>>>>>> courant
+
 
     # Создаём сетку заданного размера
     m = CalcMesh(vsize, hsize, h, tau)
     #---------------------------------
     
     # setting up starting distibutions
-    num = np.random.randint(hsize * vsize)
-    startdistrib = np.zeros((hsize * vsize, 1))
-    startdistrib[num] = 1
     
-    m.smth = startdistrib
+    
+    m.smth = startdistrib(vsize, hsize)
     #---------------------------------------------
 
     # create dir for specific cartoon, move to it, leave it at the end
 
-    dirname = 'cartoon' + '-'.join(asctime()[3:-5].split())
+    dirname = 'cartoon' + '-'.join(asctime()[3:-5].replace(':','=').split())
     mkdir(dirname)
     chdir(dirname)
 
@@ -137,11 +149,9 @@ if __name__=="__main__":
 
     # Делаем шаги по времени,
     # на каждом шаге считаем новое состояние и пишем его в VTK
-<<<<<<< HEAD
-    for i in range(1, 50):
-=======
+
     for i in range(1, nsteps):
->>>>>>> courant
+
         m.move(i, tau)
         m.snapshot(i)
 

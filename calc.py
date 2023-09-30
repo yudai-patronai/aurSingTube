@@ -32,7 +32,7 @@ class Diff():
         n - horizontal size in number of nodes
         D - diffusion coefficient 
     """
-    def __init__(self, h, tau, m,n, D = 1):
+    def __init__(self, h, tau, m,n, D = 1.0, a = 2.0):
         self.N = m*n
         self.m = m
         self.n = n
@@ -43,6 +43,7 @@ class Diff():
         print('A=', self.A)
         self.B = self.createB()
         print('B=', self.B)
+        self.kolm = a
 
     def createA(self):
         """
