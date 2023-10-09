@@ -43,7 +43,7 @@ class Diff():
         print('A=', self.A)
         self.B = self.createB()
         print('B=', self.B)
-        self.kolm = a
+        self.a = a
 
     def createA(self):
         """
@@ -154,6 +154,17 @@ class Diff():
         # first n are lost
         data = np.array([lower, left, diag, right, upper ],dtype='float64')
         return ssp.dia_array((data, offsets), shape=(self.N, self.N)).asformat('csr')
+
+    def source(self, xold):
+        """
+        is responsible for adding source components to both sides of the difference equation
+        \partial_t u = \partialD u + f(u)
+        Au_new + f(u_new) = Bu_old + f(u_old)
+        Au_new + (\p f / \p u_old) u_new = Bu_old + (\p f / \p u_old) u_old
+
+        """
+        partial = self.a - 2*self.a*xold    # to change!
+        return partial
     
     def step(self, xold ):
         """
@@ -177,4 +188,10 @@ class Diff():
             new step values.
     
         """
-        return ssp.linalg.spsolve(self.A, self.B@xold)
+        #left = self.A + ssp.eye(self.m*self.n, dtype = 'float64', format = 'csr').multiply(self.source(xold))
+        #right = self.B@xold + ssp.eye(self.m*self.n, dtype = 'float64', format = 'csr').multiply(self.source(xold))@xold
+        
+        left = self.A 
+        right = self.B@xold + self.a * xold - self.a * np.power(xold, 2)
+        return ssp.linalg.spsolve(left, right)
+         
