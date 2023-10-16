@@ -32,13 +32,6 @@ class CalcMesh:
         self.comp = cc.Diff(self.step, self.tau, self.vsize, self.hsize)
         #-------------------------------------------------------------
         
-        samp = np.linspace(0,1,self.hsize)
-        
-        #samp[1:] = np.log(samp[1:])
-        #samp[0] = samp[1] - 1/self.step 
-        #samp = -samp
-        # Модельная скалярная величина распределена как-то вот так
-        #self.smth = np.tile(samp, self.vsize)
         
         
         
