@@ -21,6 +21,7 @@ cylindrical coordinate laplacian , points being numbered as follows:
 
 import numpy as np
 import scipy.sparse as ssp
+import sympy as smp
 
 class Diff():
     """
@@ -30,20 +31,32 @@ class Diff():
         tau - time step
         m - vertical size in number of nodes
         n - horizontal size in number of nodes
-        D - diffusion coefficient 
+        D - nparray of diffusion coefficients 
+        func - list of sympy function expressions
     """
-    def __init__(self, h, tau, m,n, D = 1.0, a = 2.0):
+    def __init__(self, h, tau, m, n, D = np.ones(1),  func = ['0']):
+        if len(func) != len(D):
+            print('dimensions do not match')
+            raise TypeError
+        self.nComps = len(D)
         self.N = m*n
         self.m = m
         self.n = n
         self.h = h 
         self.tau = tau
-        self.crnt = tau/(h*h) * D  # Courant value
+        self.crnt = tau/(h*h) * D  # Courant values
         self.A = self.createA()
-        print('A=', self.A)
+        #print('A=', self.A)
         self.B = self.createB()
-        print('B=', self.B)
-        self.a = a
+        #print('B=', self.B)
+        #self.a = a
+        
+        for _ in range(self.nComps):
+            pass
+        
+        # to do !!!!preparing lambda functions for source evaluation
+        #row = smp.lambdify((x, y), smp.Matrix((x, x + y, x*y)), modules='numpy')
+        
 
     def createA(self):
         """
@@ -163,8 +176,9 @@ class Diff():
         Au_new + (\p f / \p u_old) u_new = Bu_old + (\p f / \p u_old) u_old
 
         """
+        
         partial = self.a - 2*self.a*xold    # to change!
-        return partial
+        return (partial, func)
     
     def step(self, xold ):
         """
