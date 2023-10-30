@@ -33,6 +33,8 @@ class Diff():
         n - horizontal size in number of nodes
         D - nparray of diffusion coefficients 
         func - list of sympy function expressions
+        coefs - list of coefficients
+        
     """
     def __init__(self, h, tau, m, n, D = np.ones(1),  func = ['0']):
         if len(func) != len(D):
