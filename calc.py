@@ -36,7 +36,7 @@ class Diff():
         coefs - list of coefficients
         
     """
-    def __init__(self, h, tau, m, n, D = np.ones(1),  func = ['0']):
+    def __init__(self, h, tau, m, n, a = 1, D = np.ones(1),  func = ['0']):
         if len(func) != len(D):
             print('dimensions do not match')
             raise TypeError
@@ -51,7 +51,7 @@ class Diff():
         #print('A=', self.A)
         self.B = self.createB()
         #print('B=', self.B)
-        #self.a = a
+        self.a = a
         
         for _ in range(self.nComps):
             pass

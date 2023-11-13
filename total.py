@@ -8,14 +8,15 @@ from math import floor, ceil
 # Класс расчётной сетки
 class CalcMesh:
 
-    # Конструктор сетки size x size точек с шагом h по пространству
+    # grid vsize x hsize with h space step
     
-    def __init__(self, vsize, hsize, step, tau):
+    def __init__(self, vsize, hsize, step, tau, ncomps = 1):
         # 2D-сетка из расчётных точек, у каждой из которых, тем не менее, 3 координаты
         self.hsize = hsize
         self.vsize = vsize
         self.step = step
         self.tau = tau
+        self.ncomps = ncomps
         xys = np.array(np.meshgrid(np.arange(hsize),np.arange(vsize)), dtype='float64')
         
         
@@ -29,17 +30,13 @@ class CalcMesh:
       
         print('coords=\n ', self.nodes)
         
-        self.comp = cc.Diff(self.step, self.tau, self.vsize, self.hsize)
+        #self.comp = cc.Diff(self.step, self.tau, self.vsize, self.hsize)
         #-------------------------------------------------------------
         
-        
-        
-        
  
-    # Метод отвечает за выполнение для всей сетки шага по времени величиной tau
+    #  tau size time step for the whole grid 
     def move(self, num, tau):
-        # По сути метод просто двигает все точки c их текущими скоростями
-        
+    
         calc = cc.Diff(self.step, tau, self.vsize, self.hsize)
         #print('left=', calc.A.nonzero())
         #print('right=', calc.B.nonzero())
@@ -50,17 +47,14 @@ class CalcMesh:
        
         smth = vtk.vtkDoubleArray()
         smth.SetName("smth")
-
         
-        
+        #geometric points
         points = vtk.vtkPoints()
-        #points.SetData(vtkarr)
+       
         for x in self.nodes:
             points.InsertNextPoint(x)
-        #print(points)
+        #-------------------------------
         
-        #print(self.smth.shape)
-        #print(self.smth)
         values = np.reshape(self.smth,(self.smth.shape[0], 1))
         smth.SetNumberOfComponents(values.shape[1])
         smth.SetNumberOfTuples(values.shape[0])
@@ -86,7 +80,7 @@ class CalcMesh:
         writer.SetFileName("cubic2d-step-" + str(snap_number) + ".vts")
         writer.Write()
 # setting up starting distribution       
-def startdistrib(m, n):
+def startdistrib(m, n, ncomps = 1):
     """
 
     Parameters
