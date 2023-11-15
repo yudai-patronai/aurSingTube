@@ -10,7 +10,7 @@ class CalcMesh:
 
     # grid vsize x hsize with h space step
     
-    def __init__(self, vsize, hsize, step, tau, ncomps = 1):
+    def __init__(self, vsize, hsize, step, tau, names, ncomps = 1):
         # 2D-сетка из расчётных точек, у каждой из которых, тем не менее, 3 координаты
         self.hsize = hsize
         self.vsize = vsize
@@ -24,12 +24,11 @@ class CalcMesh:
         cds=xys.reshape(xys.shape[0],xys.shape[1]*xys.shape[2])
         
         self.nodes = np.vstack((cds, np.zeros(shape=cds.shape[1:]))).T
-        print(self.nodes.shape)
-        print(self.nodes.dtype)
-
-      
-        print('coords=\n ', self.nodes)
         
+        if names:
+            self.names = names
+        else:
+            self.names = ' '.join(['u' + str(i+1) for i in range(ncomps)])
         #self.comp = cc.Diff(self.step, self.tau, self.vsize, self.hsize)
         #-------------------------------------------------------------
         
@@ -37,7 +36,7 @@ class CalcMesh:
     #  tau size time step for the whole grid 
     def move(self, num, tau):
     
-        calc = cc.Diff(self.step, tau, self.vsize, self.hsize)
+        calc = cc.Diff(self.step, tau, self.vsize, self.hsize, )
         #print('left=', calc.A.nonzero())
         #print('right=', calc.B.nonzero())
         
@@ -79,6 +78,7 @@ class CalcMesh:
         writer.SetInputDataObject(structuredGrid)
         writer.SetFileName("cubic2d-step-" + str(snap_number) + ".vts")
         writer.Write()
+
 # setting up starting distribution       
 def startdistrib(m, n, ncomps = 1):
     """

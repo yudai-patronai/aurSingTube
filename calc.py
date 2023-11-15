@@ -31,12 +31,13 @@ class Diff():
         tau - time step
         m - vertical size in number of nodes
         n - horizontal size in number of nodes
+        a - array of source function coeffs
         D - nparray of diffusion coefficients 
         func - list of sympy function expressions
         coefs - list of coefficients
         
     """
-    def __init__(self, h, tau, m, n, a = 1, D = np.ones(1),  func = ['0']):
+    def __init__(self, h, tau, m, n, D = np.ones(1), a = np.ones(1), func = ['0']):
         if len(func) != len(D):
             print('dimensions do not match')
             raise TypeError
