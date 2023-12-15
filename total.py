@@ -87,10 +87,11 @@ class CalcMesh:
         
         # filling vtk data arrays
         for i in range(len(self.smth)):
-            values = np.reshape(x, (x.size, 1), order = 'C')
-            smth[i].SetNumberOfComponents(values.shape[1])
+            values = np.reshape(x, (x.size), order = 'C')
+            print(type(smth[i]))
+            smth[i].SetNumberOfComponents(1)
             smth[i].SetNumberOfTuples(values.shape[0])
-            smth[i].SetVoidArray(values, values.size, 1)
+            smth[i].SetVoidArray(np.ascontiguousarray(values), values.size, 1)
         #-----------------------------------------
         
         # appending data arrays
