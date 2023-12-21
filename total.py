@@ -86,17 +86,17 @@ class CalcMesh:
         structuredGrid.SetPoints(points)
         
         # filling vtk data arrays
-        for i in range(len(self.smth)):
-            values = np.reshape(x, (x.size), order = 'C')
+        n = len(self.smth)
+        print(n)
+        for i in range(n):
+            values = np.reshape(self.smth[i], (self.smth[i].size), order = 'C')     # self.smth[i] must be of size n-by-1
+            print(i)
             print(type(smth[i]))
             smth[i].SetNumberOfComponents(1)
             smth[i].SetNumberOfTuples(values.shape[0])
             smth[i].SetVoidArray(np.ascontiguousarray(values), values.size, 1)
+            structuredGrid.GetPointData().AddArray(smth[i])     # appending data arrays
         #-----------------------------------------
-        
-        # appending data arrays
-        
-        structuredGrid.GetPointData().AddArray(smth)
         
         #--------------------------------------------
         
