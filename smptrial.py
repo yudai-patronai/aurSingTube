@@ -26,3 +26,21 @@ k2 = 0.5
 k3 = -1.0
 
 unew = row(k1,k2,k3,u1,u2,u3)
+
+#%%
+import numpy as np
+import sympy as smp
+
+
+x = smp.symbols('x', real = True)
+f = smp.simplify(smp.Piecewise((-x, x < 0), (x, x > 0), (0, x==0)))
+func  = smp.lambdify(x, f, modules='numpy')
+
+args = np.arange(-1, 1, 0.1)
+
+print(func(args))
+
+#print(f.subs(x, -1))  # Output: 1
+#print(f.subs(x, 1))   # Output: 2
+
+

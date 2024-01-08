@@ -5,13 +5,14 @@ from time import asctime
 import calc as cc 
 from math import floor, ceil
 from collections import namedtuple as ntup
+import sympy as smp
 
 # Класс расчётной сетки
 class CalcMesh:
 
     # grid vsize x hsize with h space step
     
-    def __init__(self, vsize, hsize, step, tau, names, ncomps = 1):
+    def __init__(self, vsize, hsize, step, tau, names = None, ncomps = 1):
         """
 
         Parameters
@@ -39,14 +40,17 @@ class CalcMesh:
         self.vsize = vsize
         self.step = step
         self.tau = tau
-        self.ncomps = ncomps
+        if names:
+            self.ncomps = len(names.split())
+        else:
+            self.ncomps = ncomps
         xys = np.array(np.meshgrid(np.arange(hsize),np.arange(vsize)), dtype='float64')
         
         
         xys = np.multiply( xys, step, casting="unsafe")
-        cds=xys.reshape(xys.shape[0],xys.shape[1]*xys.shape[2])
+        self.cds=xys.reshape(xys.shape[0],xys.shape[1]*xys.shape[2])
         
-        self.nodes = np.vstack((cds, np.zeros(shape=cds.shape[1:]))).T
+        self.nodes = np.vstack((self.cds, np.zeros(shape=self.cds.shape[1:]))).T
         
         if names:
             self.names = names.split()
@@ -54,8 +58,16 @@ class CalcMesh:
             self.names = ' '.join(['u' + str(i+1) for i in range(ncomps)])
         #self.comp = cc.Diff(self.step, self.tau, self.vsize, self.hsize)
         #-------------------------------------------------------------
+    
+    def startdistrib(self, funcs):
+        if len(funcs)!=self.ncomps:
+            raise ValueError('number of funcs should match num of comps')
+            exit()
+        crds = smp.symbols('r z')
+        fs = smp.Matrix(funcs).T
+        u0 = smp.lambdify(crds, fs, modules = 'numpy')
+        return u0(self.cds.T)
         
- 
     #  tau size time step for the whole grid 
     def move(self, num, tau):
     
@@ -123,7 +135,7 @@ def startdistrib(m, n, names = 'u1'):
     ----------
     m : vertical size, int.
     n : horizontal size, int
-    names : str of matter names sep-d by spaces
+    names : str of matter names sep-ted by spaces
     
     Returns
     -------
@@ -150,16 +162,17 @@ if __name__=="__main__":
     
 
     nsteps = 20
+    names = 'a1 a2'
 
 
     # Создаём сетку заданного размера
-    m = CalcMesh(vsize, hsize, h, tau, 'a1 a2')
+    m = CalcMesh(vsize, hsize, h, tau, names)
     #---------------------------------
     
     # setting up starting distibutions
     #at this point the mesh is introduced with its data
     #startdistrib returns a namedtuple 
-    m.smth = startdistrib(vsize, hsize)
+    m.smth = startdistrib(vsize, hsize, names)
     #---------------------------------------------
 
     # create dir for specific cartoon, move to it, leave it at the end
