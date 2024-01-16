@@ -4,7 +4,7 @@ from os import mkdir, chdir
 from time import asctime
 import calc as cc 
 from math import floor, ceil
-from collections import namedtuple as ntup
+from collections import namedtuple as nmtuple
 import sympy as smp
 
 # Класс расчётной сетки
@@ -162,8 +162,19 @@ if __name__=="__main__":
     
 
     nsteps = 20
-    names = 'a1 a2'
 
+    #init distributions
+    names = 'a1 a2'
+    Dist = nmtuple('dist', 'exprs conds')
+    a1 = Dist(['0'], [True])
+    a2 = Dist(['1'], [True])
+
+    Distrs = nmtuple('u0', names)
+    dist = Distrs(*[a1, a2]) #make a tuple of all dists to pass to startdistrib
+
+
+
+    #--------------------------------
 
     # Создаём сетку заданного размера
     m = CalcMesh(vsize, hsize, h, tau, names)
@@ -172,7 +183,7 @@ if __name__=="__main__":
     # setting up starting distibutions
     #at this point the mesh is introduced with its data
     #startdistrib returns a namedtuple 
-    m.smth = startdistrib(vsize, hsize, names)
+    m.smth = m.startdistrib(distrs)
     #---------------------------------------------
 
     # create dir for specific cartoon, move to it, leave it at the end
