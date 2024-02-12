@@ -212,3 +212,16 @@ class Diff():
         right = self.B@xold + self.a * xold - self.a * np.power(xold, 2)
         return ssp.linalg.spsolve(left, right)
          
+
+class Diff1d():
+    def __init__(self, h, tau, n, fdata):
+
+
+    def createA(self):
+        pass
+
+    def createB(self):
+        pass
+
+    def step(self):
+        
