@@ -215,7 +215,7 @@ class Diff():
 
 class Diff1d():
     def __init__(self, h, tau, n, fdata):
-
+        
 
     def createA(self):
         pass
