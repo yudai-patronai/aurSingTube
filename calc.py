@@ -215,8 +215,7 @@ class Diff():
 
 class Diff1d():
     def __init__(self, h, tau, n, fdata):
-
-
+        pass
     def createA(self):
         pass
 
@@ -224,4 +223,4 @@ class Diff1d():
         pass
 
     def step(self):
-        
+        pass
