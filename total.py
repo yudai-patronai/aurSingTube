@@ -183,7 +183,7 @@ if __name__=="__main__":
     # setting up starting distibutions
     #at this point the mesh is introduced with its data
     #startdistrib returns a namedtuple 
-    m.smth = m.startdistrib(distrs)
+    m.smth = m.startdistrib(dist)
     #---------------------------------------------
 
     # create dir for specific cartoon, move to it, leave it at the end
