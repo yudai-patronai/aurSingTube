@@ -69,6 +69,37 @@ class CalcMesh:
         return u0(self.cds.T)
         
     #  tau size time step for the whole grid 
+
+    def fromJson(filename):
+        """
+        this is about reading a json config file from the current dir, given        in filename and extracting comp data from it in the form of a dict 
+
+        Parameters
+        ----------
+        filename : str
+            name of the json file
+
+        Returns
+        -------
+        dict
+            json data
+        
+        Example
+        -------
+
+        >>> data = fromJson('data.json')
+
+        >>> data
+        {"/comment": "it`s an example version of a component functional data",
+         "name": null,
+         "start": [["1", "r<R/3"], ["0", true]],
+         "react": "k1 * u0 *u0"}
+
+        """
+        with open(filename, 'r') as f:
+            data = json.load(f)
+        return data
+        
     def move(self, num, tau):
     
         calc = cc.Diff(self.step, tau, self.vsize, self.hsize, )
@@ -165,12 +196,12 @@ if __name__=="__main__":
 
     #init distributions
     names = 'a1 a2'
-    Dist = nmtuple('dist', 'exprs conds')
-    a1 = Dist(['0'], [True])
-    a2 = Dist(['1'], [True])
+    dist = nmtuple('dist', 'exprs conds')
+    a1 = dist(['0'], [True])
+    a2 = dist(['1'], [True])
 
-    Distrs = nmtuple('u0', names)
-    dist = Distrs(*[a1, a2]) #make a tuple of all dists to pass to startdistrib
+    distrs = nmtuple('u0', names)
+    dist = distrs(*[a1, a2]) #make a tuple of all dists to pass to startdistrib
 
 
 
