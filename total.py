@@ -4,7 +4,7 @@ from os import mkdir, chdir
 from time import asctime
 import calc as cc 
 from math import floor, ceil
-from collections import namedtuple as nmtuple
+#from collections import namedtuple as nmtuple
 import sympy as smp
 
 # Класс расчётной сетки
