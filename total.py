@@ -69,8 +69,8 @@ class CalcMesh:
         return u0(self.cds.T)
         
     #  tau size time step for the whole grid 
-
-    def fromJson(filename):
+    @classmethod
+    def fromJson(cls, filename):
         """
         this is about reading a json config file from the current dir, given        in filename and extracting comp data from it in the form of a dict 
 
