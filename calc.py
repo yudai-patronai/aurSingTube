@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
+
+import numpy as np
+import scipy.sparse as ssp
+import sympy as smp
+
+class Diff():
+    """
+    
 about calculating the next time slice using Crank-Nicholson scheme, 
 cylindrical coordinate laplacian , points being numbered as follows:
  
@@ -17,15 +24,9 @@ cylindrical coordinate laplacian , points being numbered as follows:
  *    *    *    * ... *    *    *
  0    1    2    3 ... n-3  n-2  n-1
 @author: ariel
-"""
 
-import numpy as np
-import scipy.sparse as ssp
-import sympy as smp
 
-class Diff():
-    """
-    class, encompassing all the calculating algs, 
+    class, encompassing providing Crank - Nickolson approximation for the cylindrical Laplacian 
     init takes following args:
         h - space step
         tau - time step
@@ -213,13 +214,27 @@ class Diff():
         return ssp.linalg.spsolve(left, right)
          
 
+class Solver():
+    """
+    the following is about constructing a solver for the non-stationary pde approximations, out of finite -difference opeerators like those presented in Diff class.
+    """
+
+    pass
+
+class Timestep():
+    """
+    the following is about constructing a timestep operator for the non-stationary pde approximation.       It has to get different solvers as inputs to form the general operator itself. 
+    """
+    def __init__(self):
+        pass
+
 class Diff1d():
+    """
+the class, encompassing boundary conditions approximations, namely those involving 1d difference equations
+    """
     def __init__(self, h, tau, n, fdata):
 
         pass
-
-        
-
 
     def createA(self):
         pass
