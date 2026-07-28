@@ -17,7 +17,9 @@ This is an attempt to build an approximation for a system of partial differentia
 
 ## The problem , for which approximation is built 
 
-The details are given in the notes folder. The main schemes are as follows 
+The details are given in the notes folder. The main schemes are as follows. 
+
+# In the Volume
 
 ```mermaid
 graph LR
@@ -48,6 +50,16 @@ G[aN] --> |knr|A[a]
 F[a*N] --> |knr|B[a*]
 end
 ```
+# On the Tubulus 
+
+![Surface-to-Volume concentration](notes/boarder.pdf)
+
+# Approximate Constant Values 
+
+| sign | meaning | value |
+| --- | --- | --- |
+|  |  |  |
+| git diff | Show file differences that haven't been staged | |
 
 ## Approximation
 
