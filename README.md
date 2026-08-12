@@ -56,10 +56,38 @@ end
 
 # Approximate Constant Values 
 
-| sign | meaning | value |
-| --- | --- | --- |
-|  |  |  |
-| git diff | Show file differences that haven't been staged | |
+| designation | value | source | comment |
+| --- | --- | --- |--- |
+|  |  |  | |
+| a | 8 mcM | [1] | |
+| N | 8 mcM | [1] | maximal receptor rate , those , connected with aurora-kynase |
+| pp | 0.4 mcM | [1]  | |
+| | | | |
+| kpcat | | | |
+| kaf | | | |
+| kar | | | |
+| knf | | | |
+| knr | | | |
+| kacat | | | |
+| kpf | | | |
+| kpr | | | |
+
+
+| designation | measure unit | dimensionless value | comment |
+| --- | --- | --- | --- |
+| | | | |
+| kpcat | | | |
+| kaf | | | |
+| kar | | | |
+| knf | | | |
+| knr | | | |
+| kacat | | | |
+| kpf | | | |
+| kpr | | | |
+
+[1](https://elifesciences.org/articles/10644)
+[2](https://www.nature.com/articles/s41467-019-08418-4)
+
 
 ## Approximation
 
