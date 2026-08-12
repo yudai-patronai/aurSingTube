@@ -63,21 +63,23 @@ end
 | N | 8 mcM | [1] | maximal receptor rate , those , connected with aurora-kynase |
 | pp | 0.4 mcM | [1]  | |
 | | | | |
-| kpcat | | | |
-| kaf | | | |
-| kar | | | |
-| knf | | | |
-| knr | | | |
-| kacat | | | |
-| kpf | | | |
-| kpr | | | |
+| kcis | $$7.3 *10^{-4}\ : 7.3$$ | [1] | |
+| kcat | $$19\ s^{-1}$$ | [1] | | 
+| kpcat | $$0.024\ s^{-1}$$ | [1] | |
+| kaf | $$0.1\ mcM^{-1}s^{-1}$$ | | |
+| kar | | | made of other constants |
+| knf | $$50\ mcM^{-1}s^{-1}$$ | | |
+| knr | $$1600\ s^{-1}$$ | | |
+| kacat | $$0.027\ s^{-1}$$ | | |
+| kpf | $$0.6\ mcM^{-1}s^{-1}$$ | | |
+| kpr | $$0.4 * 10^{-3}\ s^{-1}$$ | | |
 
 
 | designation | measure unit | dimensionless value | comment |
 | --- | --- | --- | --- |
-| | | | |
-| kpcat | | | |
-| kaf | | | |
+| kcat | kcis/kpcat , time scale | $$3.84 * 10^{-5}$$ | |
+| kpcat | kcat | 1 | |
+| kaf | kcat/ a0 | 21 | |
 | kar | | | |
 | knf | | | |
 | knr | | | |
