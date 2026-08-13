@@ -80,12 +80,14 @@ end
 | kcat | kcis/kpcat , time scale | $$3.84 * 10^{-5}$$ | |
 | kpcat | kcat | 1 | |
 | kaf | kcat/ a0 | 21 | |
-| kar | | | |
-| knf | | | |
-| knr | | | |
-| kacat | | | |
-| kpf | | | |
-| kpr | | | |
+| kar | kcat | 3.36 | |
+| knf | kcat/a0 | 21 | |
+| knr | kcat | 842 | |
+| kacat | kcat | 0.0014 | |
+| kpf | $$0.6mcM^{-1}s^{-1} kcat/pp0 $$ | 0.0013 | |
+| kpr | kcat | 0.06 | |
+
+References
 
 [1](https://elifesciences.org/articles/10644)
 [2](https://www.nature.com/articles/s41467-019-08418-4)
