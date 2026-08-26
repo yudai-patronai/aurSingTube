@@ -52,7 +52,7 @@ end
 ```
 # On the Tubulus 
 
-![Surface-to-Volume concentration](notes/boarder.pdf)
+![Tubulus-to-Volume concentration interaction](notes/tubulus.svg)
 
 # Approximate Constant Values 
 
