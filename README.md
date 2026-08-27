@@ -54,6 +54,28 @@ end
 
 ![Tubulus-to-Volume concentration interaction](notes/tubulus.svg)
 
+To concider the interaction between the tubulus and the volume we are to introduce the notion of the unconditional sedimentation radius $r_0$, i.e. the radius of the zone inside which the absorbtion of a molecule by the tubulus becomes inevitable. 
+
+Once we aet it forth we can write the substance flow from the volume towards the tubulus as 
+
+$$
+f_+ = \int_0^{r_0} 2\pi r k_+ cdr  = \pi r_0^2 k_+ c
+$$
+
+The flow from tubulus to the volume then reads as 
+
+$$
+f_- = k_- b 
+$$
+
+Then the whole time variable of the linear concentration by time reads as 
+
+$$
+\frac {db}{dt} = f_+ - f_- = \pi r_0^2 k_+ c - k_- b
+$$
+
+where the dimensionality of $k_+$ and $k_-$  is $l^{-1}t^{-1}$
+
 # Approximate Constant Values 
 
 | designation | value | source | comment |
