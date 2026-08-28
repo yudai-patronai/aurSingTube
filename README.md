@@ -71,10 +71,18 @@ $$
 Then the whole time variable of the linear concentration by time reads as 
 
 $$
-\frac {db}{dt} = f_+ - f_- = \pi r_0^2 k_+ c - k_- b
+\frac {\partial b}{\partial t} = f_+ - f_- = \pi r_0^2 k_+ c - k_- b
 $$
 
-where the dimensionality of $k_+$ and $k_-$  is $l^{-1}t^{-1}$
+where the dimensionality of $k_+$ and $k_-$  is $t^{-1}$
+
+At the same time , the amount of substance dissolving from/sedimenting on the tubulus exactly equals to the change in the same substance in the surrounding solution at r=0 (we treat $r_0$ to be negligibly small for now). 
+
+$$
+\frac {dN}{dt} = \int_S J ds  ,\ J = -D \frac {dc}{dr}
+$$
+
+with $S$ being treated as area through which the flow is considered. The minus sign is necessary so far the substance is flowing towards the lower concentration. 
 
 # Approximate Constant Values 
 
