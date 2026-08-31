@@ -52,7 +52,9 @@ end
 ```
 # On the Tubulus 
 
-![Tubulus-to-Volume concentration interaction](notes/tubulus.svg)
+| Tubulus and Volume | Around the Tubulus |
+| :---: | :---: |
+| ![Tubulus-to-Volume concentration interaction](notes/tubulus.svg) | ![Substance flow](notes/flow.svg) |
 
 To concider the interaction between the tubulus and the volume we are to introduce the notion of the unconditional sedimentation radius $r_0$, i.e. the radius of the zone inside which the absorbtion of a molecule by the tubulus becomes inevitable. 
 
@@ -117,6 +119,11 @@ R
 | kacat | $$0.027\ s^{-1}$$ | | |
 | kpf | $$0.6\ mcM^{-1}s^{-1}$$ | | |
 | kpr | $$0.4 * 10^{-3}\ s^{-1}$$ | | |
+| | | | |
+| $r_0$ | 15 : 20 nm | | |
+| tubulus length | ~20 nm | | |
+| tubulus diameter | 6 : 8 nm | | |
+
 
 
 | designation | measure unit | dimensionless value | comment |
