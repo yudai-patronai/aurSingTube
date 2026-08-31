@@ -79,13 +79,27 @@ where the dimensionality of $k_+$ and $k_-$  is $t^{-1}$
 At the same time , the amount of substance dissolving from/sedimenting on the tubulus exactly equals to the change in the same substance in the surrounding solution at r=0 (we treat $r_0$ to be negligibly small for now). 
 
 $$
-\frac {dN}{dt} = \int_S J ds  ,\ J = -D \frac {dc}{dr}
+\frac {dN}{dt} = \int_S J ds  ,\ J = -D \frac {\partial c}{\partial r}
 $$
 
-with $S$ being treated as area through which the flow is considered. The minus sign is necessary so far the substance is flowing towards the lower concentration. 
+with $S$ being treated as area through which the flow is considered. The minus sign is necessary so far the substance is flowing towards the lower concentration.
+Thus we have 
+
+$$
+-\frac{1}{l}\frac{dN}{dt} = 2\pi r_0 D \frac{\partial c}{\partial r}|_{r=r_0} = k_- b - k_+ \pi r_0^2 c = \beta (c_s - c)
+$$
+
+where $c_s$ is so-called saturated solution concentration, i e , the volume concentration , at which the solution is at mass equilibrium with the tubulus. See, e g, this link on [practical solubility](https://www.stevenabbott.co.uk/practical-solubility/Noyes-Whitney.php)
+In order to correctly account for all the necessary constants , we fix that 
+
+$$
+\beta = k_+ \pi r_0^2 ,\  c_s = \frac{k_-}{\beta} b
+$$
+
+These constants are also in close connection with Sherwood number . See, eg [SHerwood Number in Chemical Engeneering Applications](https://www.researchgate.net/publication/383600123_Sherwood_Sh_Number_in_Chemical_Engineering_Applications-A_Brief_Review)
 
 # Approximate Constant Values 
-
+R
 | designation | value | source | comment |
 | --- | --- | --- |--- |
 |  |  |  | |
