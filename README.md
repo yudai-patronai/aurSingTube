@@ -160,3 +160,9 @@ $$
 
 where $ s = s(z) $ is a vector of linear densities of species on the surface of a tubule. 
 
+# Boundary Conditions
+
+As is habitual in problems concerning diffusion-reaction equations we use zero flow boundary conditions everywhere , except for the tubulus on r=0 . 
+
+And 3rd type boundary conditions on the tubulus.  
+
